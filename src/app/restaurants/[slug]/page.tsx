@@ -1,5 +1,6 @@
-import { createClient } from '../../../supabase/server';
- 
+ import ResInd from '@/components/restaurantIndividual/ResInd';
+import { createClient } from '../../../../supabase/server';
+
 
 async function RestaurantElement({
   params,
@@ -9,19 +10,16 @@ async function RestaurantElement({
 
 
   const { slug } = await params
- console.log(slug)
+
 
     
   const supabase = await createClient();
-  const { data: res, error, count  } = await supabase.from("restaurants").select('*')
+  const { data: res, error  } = await supabase.from("restaurants").select('*')
   .eq('slug_name', slug);
        console.log(error)
        console.log(res)
   return (
-    <div>
-      <h1>sdfsdff</h1>
-    </div>
-  )
+              <ResInd res={res} />  )
 }
 
 export default RestaurantElement

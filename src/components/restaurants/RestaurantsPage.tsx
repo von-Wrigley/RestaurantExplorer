@@ -20,7 +20,7 @@ function RestaurantsPage({res, currentPage, totalPages}: any) {
         
     
       {res.map((restaurant:any)=> (
-        <Link href={restaurant.slug_name} key={restaurant.id} className=' bg-amber-300  border rounded-lg  flex flex-col'>
+        <Link href={`/restaurants/${restaurant.slug_name}`} key={restaurant.id} className=' bg-amber-300 rounded-lg  flex flex-col'>
         
      
           {restaurant.images_url && restaurant.images_url.length > 0 ? (
