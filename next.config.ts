@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
         remotePatterns: [
           {
             protocol: 'https',
-            hostname: 'pftyuweccxmoqawroech.supabase.co', // Replace with the actual hostname of your image source
+        
             port: '', // Leave empty if no specific port
         
           }
