@@ -1,7 +1,7 @@
-
-import { Span } from 'next/dist/trace';
+ 
 import CarouselImage from './CarouselImage';
 import TimeTable from './TimeTable';
+import MenuItem from './MenuItem';
 
 
 function ResInd({res}:any) {
@@ -15,14 +15,14 @@ function ResInd({res}:any) {
         <p className='text-center  pt-2 text-lg w-2/5 mx-auto'>{restuarant.translatable['ru'].description}</p>
         </section>
         
-        <div className='flex flex-row gap-8 mt-8'>
+        <div className='flex flex-row gap-8 mt-8 items-start'>
 
    
      <section className='border-amber-300 border-2
        hover:shadow-2xl
         transition-all duration-150 ease-in-out
       rounded-2xl  bg-white  flex-2'>
-        <h4>Кухня</h4>
+    <MenuItem resId={restuarant.id} />
       </section>
 
          <section className=' border-amber-300 border-2
@@ -77,7 +77,11 @@ function ResInd({res}:any) {
                     {restuarant.kids_room && <span className='bg-amber-300 shadow-lg shadow-amber-300/50 px-2 w-fit p-1 rounded-md'>Детская игроваяя комната</span>}
                   
                    </div>
-                 
+                 <div>
+                   <h4 className='font-bold text-lg'>Контакты</h4>
+        <p className=' pt-2 w-fit'><span className='font-semibold'>Почта: </span>  {restuarant.email}</p>
+         <p className=' pt-2 w-fit '><span className='font-semibold'>Номер телефона: </span> {restuarant.phone_number}</p>
+                 </div>
       
             
       
@@ -95,12 +99,7 @@ function ResInd({res}:any) {
         
         
         
-        
-         <section>  
-        <h4>Контакты</h4>
-        <p className='text-center pt-2 w-1/3 mx-auto'>Почта {restuarant.email}</p>
-         <p className='text-center pt-2 w-1/3 mx-auto'>Номер телефона  {restuarant.phone_number}</p>
-        </section>
+       
 
 
 
