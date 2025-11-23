@@ -45,6 +45,7 @@ const [currentIndex, setCurrentIndex] = useState<number>(0)
           height={300} 
           src={image} 
           alt={'Image'}
+          loading='eager'
           className='w-full h-full rounded-2xl '
      />
 

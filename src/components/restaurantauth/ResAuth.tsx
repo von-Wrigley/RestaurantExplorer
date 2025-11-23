@@ -1,8 +1,8 @@
 'use client'
 import { useActionState, useState } from "react"
+import SignupForm from "../forms/SignupForm"
+import SigninForm from "../forms/SigninForm"
 
-import SignupForm from "./SignupForm";
-import SigninForm from "./SigninForm";
 
 function RegisterForm() {
 

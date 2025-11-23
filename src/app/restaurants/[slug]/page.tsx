@@ -16,8 +16,7 @@ async function RestaurantElement({
   const supabase = await createClient();
   const { data: res, error  } = await supabase.from("restaurants").select('*')
   .eq('slug_name', slug);
-       console.log(error)
-       console.log(res)
+
   return (
               <ResInd res={res} />  )
 }

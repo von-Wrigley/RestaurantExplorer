@@ -12,6 +12,7 @@ try {
 
   if(error){
         console.error(error)
+        console.log("Error in ActionAUth: ", error)
          return;
   }
   return;
