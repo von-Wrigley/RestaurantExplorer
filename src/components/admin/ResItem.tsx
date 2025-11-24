@@ -20,7 +20,7 @@ console.log('Error:', error)
                      <p className='bg-amber-300 hover:brightness-97  w-fit p-1 rounded-lg px-1.5'>
                       {d.status ? 'В ожидании одобрения' : null}
                      </p>
-                     <BtnAdmin email={d.res_email} psw={d.res_password} id={d.id} />
+                     <BtnAdmin email={d.res_email} id={d.id} name={d.name} />
                      
         </div>
        ))}

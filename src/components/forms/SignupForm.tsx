@@ -13,7 +13,7 @@ function SignupForm() {
            
            <div><input className="p-6 text-lg border rounded-md" name="name" type="text" placeholder="название ресторана" /></div>
            <div><input className="p-6 text-lg border rounded-md" name="email" type="email" placeholder="электронная почта" /></div>
-           <div><input className="p-6 text-lg border rounded-md" name="password" type="password" placeholder="пароль" /></div>
+           
            <button type="submit" className="p-4 text-2xl hover:bg-blue-100 hover:rounded-md ">Регистрация</button>
         
         </form>

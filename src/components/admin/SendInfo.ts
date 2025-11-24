@@ -1,26 +1,57 @@
 'use server'
  
-import { createClient } from "../../../supabase/server"
 
-export async function SendInfo(id: any, email: any) {
+import { createAdminClient } from "../../../supabase/server-admin"
+import { sendemail } from "./sendemail"
 
-    const supabase = await createClient()
+export async function SendInfo(id: any, email: any, name:string) {
 
-    const { data, error } = await supabase.auth.signUp({
-  email: 'example@email.com',
-  password: 'example-password',
+    const supabase =  createAdminClient()
+//Создаем ресторан
+    const { data, error } = await supabase.auth.admin.createUser({
+  email,
+   email_confirm: true,
+   user_metadata: {
+   role: 'restaurant_owner',
+   restaurant_name: name
+   }
 })
+ if (error) throw error
+//Создаем письмо
+//Это ддля продакшена, потому что supabase.auth.admin.generateLink
+//  const { error:magicError } = await supabase.auth.admin.generateLink({
+//   type: 'magiclink',
+//   email,
+//   options: {
+//     redirectTo: `${process.env.URL}/restaurantDashboard`
+//   }
+// })
 
-    try{
-    const {data, error} = await supabase.from('restaurants').insert({id, email}).select()
-      if(error){
-        console.log('Error in sending in restaurants table from admin. ' , error.message)
-        return
-      }
+ 
+ //Отправляем данные в таблицу
 
-      console.log('загляни в таблицу рсеторан')
-    } catch(error){
-        console.log(error) 
-    }
+ const {   error: restaurantError } = await supabase
+    .from('restaurants')
+    .insert({
+        res_name:name,
+        email,
+        owner_id: data.user.id,
+    }) 
+if (restaurantError) {
+  console.error('Error creating restaurant:', restaurantError)
+  return
+}
+ const { error:er } = await supabase
+    .from('res_applications')
+    .update({ status: 'idle' })
+    .eq('res_email', email)
+    .eq('status', 'pending')    
+
+    if (er) {
+  console.error('Error updating restaurants aplications: ', restaurantError)
+  return
+}
+
+    
     
 }

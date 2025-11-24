@@ -33,7 +33,7 @@ export default async function RestaurantsList(props: {
 
 
 
-  const { data: res, error, count  } = await supabase.from("restaurants").select('*', { count: 'exact' }).range(fromPage, toPage);
+  const { data: res, error, count  } = await supabase.from("restaurants").select('*', { count: 'exact' }).eq('is_completed', true).range(fromPage, toPage);
        console.log(error)
          const totalPages = count ? Math.ceil(count/cardsPerPage) : 1;
 
