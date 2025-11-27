@@ -2,32 +2,33 @@
  
 
 import { createAdminClient } from "../../../supabase/server-admin"
-import { sendemail } from "./sendemail"
+
 
 export async function SendInfo(id: any, email: any, name:string) {
 
     const supabase =  createAdminClient()
-//Создаем ресторан
-    const { data, error } = await supabase.auth.admin.createUser({
-  email,
-   email_confirm: true,
-   user_metadata: {
-   role: 'restaurant_owner',
-   restaurant_name: name
-   }
-})
- if (error) throw error
-//Создаем письмо
-//Это ддля продакшена, потому что supabase.auth.admin.generateLink
-//  const { error:magicError } = await supabase.auth.admin.generateLink({
-//   type: 'magiclink',
-//   email,
-//   options: {
-//     redirectTo: `${process.env.URL}/restaurantDashboard`
-//   }
-// })
 
- 
+
+
+        const { data:dataInv, error:errorInvite } = await supabase.auth.admin.inviteUserByEmail(email, {
+        
+        data: {
+            role: 'restaurant_owner',
+            restaurant_name: name
+        },
+
+        redirectTo: 'http://localhost:3000/auth/callback?next=/restaurantDashboard'
+    })
+
+    console.log("dataInv ", dataInv)
+     console.log("errorInvite ", errorInvite)
+
+
+    if (errorInvite) {
+        console.error('Invitation error:', errorInvite)
+        throw errorInvite
+    }
+  
  //Отправляем данные в таблицу
 
  const {   error: restaurantError } = await supabase
@@ -35,7 +36,7 @@ export async function SendInfo(id: any, email: any, name:string) {
     .insert({
         res_name:name,
         email,
-        owner_id: data.user.id,
+        owner_id: dataInv.user.id,
     }) 
 if (restaurantError) {
   console.error('Error creating restaurant:', restaurantError)
@@ -52,6 +53,28 @@ if (restaurantError) {
   return
 }
 
+  //       const { error:magicError } = await supabase.auth.signInWithOtp({
+  //   email,
+  //   options: {
+  //     emailRedirectTo: 'http://localhost:3000/restaurantDashboard'
+  //   }
+  // })
+
+  //Создаем письмо
+// Это ддля продакшена, потому что supabase.auth.admin.generateLink
+//  const {data:linkdata,  error:magicError } = await supabase.auth.admin.generateLink({
+//   type: 'magiclink',
+//   email,
+//   options: {
+      
+//      redirectTo: `${process.env.URL || 'http://localhost:3000'}/restaurantDashboard`,
     
+//   }
+// })
+//  if (magicError){
+//   console.log(magicError.message)
+//  }
+
+
     
 }

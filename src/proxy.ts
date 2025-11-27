@@ -12,6 +12,19 @@ import { verifySession } from './data-access/dal'
  
 
 export async function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname === '/auth/callback') {
+    console.log('↪️ Skipping middleware for auth callback')
+    return NextResponse.next()
+  }
+  console.log('req  ', request)
+//    const { searchParams } = new URL(request.url);
+ 
+//   const token = searchParams.get('access_token')
+//   const type = searchParams.get('type')
+//   const next = searchParams.get("next") ?? "/restaurantDashboard";
+
+// console.log('token', token)
+// console.log('next', next)
 
   let response = NextResponse.next({
     request,
@@ -22,7 +35,7 @@ export async function proxy(request: NextRequest) {
 // verifySession()
   const {data:user, error} = await supabase.auth.getUser()
   const userRole= user?.user?.user_metadata?.role
- console.log(userRole)
+ console.log('userRole1 ' , user)
 
 
 

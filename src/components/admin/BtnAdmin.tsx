@@ -10,8 +10,9 @@ import { SendInfo } from "./SendInfo"
 function BtnAdmin({email, id, name}:any) {
 
  const sendAd=  async(id, email, name)=> {
-     await SendInfo(id, email, name)
-   await sendemail(email)
+   await SendInfo(id, email, name)
+    // await new Promise(resolve => setTimeout(resolve, 1000))
+  //  await sendemail(email)
 
  }
 

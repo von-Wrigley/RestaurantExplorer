@@ -1,8 +1,6 @@
+
 'use client'
-
 import { createClient } from "../../../supabase/supabase-client"
-
- 
 
 
 export const sendemail = async (email: string)=> {

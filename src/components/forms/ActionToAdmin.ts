@@ -24,7 +24,11 @@ const {status, error} = await supabase.from('res_applications').insert([{
 
  
     
-     if(error){
+     if(error?.code === '23505'){
+      return{
+         success:false,
+         message: 'Email already exists'
+      }
       console.log('Full error details:', error) 
 
  }

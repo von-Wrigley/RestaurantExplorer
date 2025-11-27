@@ -8,7 +8,7 @@ async function Header() {
 const supabase= await createClient()
 const {data:{user}} = await supabase.auth.getUser()
 
-
+console.log('user header', user)
 
   return (
     <header>
