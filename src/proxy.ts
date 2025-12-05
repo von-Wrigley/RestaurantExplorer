@@ -61,7 +61,9 @@ export async function proxy(request: NextRequest) {
   }
   }
 
-  if(request.nextUrl.pathname.startsWith('/restaurantDashboard')){
+  if(request.nextUrl.pathname.startsWith('/restaurantDashboard') 
+    || request.nextUrl.pathname.startsWith('/restaurantDashboard/menu')
+  || request.nextUrl.pathname.startsWith('/restaurantDashboard/description')){
     console.log('restaurantDashboard  ', userRole)
 
        if(!user){

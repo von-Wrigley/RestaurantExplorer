@@ -20,7 +20,7 @@ export async function SendInfo(id: any, email: any, name:string) {
         redirectTo: 'http://localhost:3000/auth/callback?next=/restaurantDashboard'
     })
 
-    console.log("dataInv ", dataInv)
+  
      console.log("errorInvite ", errorInvite)
 
 
@@ -42,6 +42,21 @@ if (restaurantError) {
   console.error('Error creating restaurant:', restaurantError)
   return
 }
+
+///////////////////////Menus создание////////////
+
+ const { error:erMenu } = await supabase
+    .from('menus')
+    .insert({
+      owner:  dataInv.user.id,
+      menu_items: []
+    }) 
+        if (erMenu) {
+  console.error('Error updating menus: ', erMenu)
+  return
+}
+
+
  const { error:er } = await supabase
     .from('res_applications')
     .update({ status: 'idle' })
