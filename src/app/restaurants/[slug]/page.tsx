@@ -1,4 +1,5 @@
- import ResInd from '@/components/restaurantIndividual/ResInd';
+'use server'
+import ResInd from '@/components/restaurantIndividual/ResInd';
 import { createClient } from '../../../../supabase/server';
 
 

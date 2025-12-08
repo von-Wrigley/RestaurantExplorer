@@ -30,7 +30,6 @@ export async function SendInfo(id: any, email: any, name:string) {
     }
   
  //Отправляем данные в таблицу
-
  const {   error: restaurantError } = await supabase
     .from('restaurants')
     .insert({

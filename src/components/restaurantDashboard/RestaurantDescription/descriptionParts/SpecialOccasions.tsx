@@ -8,9 +8,9 @@ function SpecialOccasions({setValue, control, errors}) {
         const specialOccasionsEn = checkedOccasions.map(x=> specialOccasionstranslations[x].en)
         const specialOccasionsEs = checkedOccasions.map(x=> specialOccasionstranslations[x].es)
 
-        setValue('translatable.ru.special_occasion', checkedOccasions)
-        setValue('translatable.en.special_occasion', specialOccasionsEn)
-        setValue('translatable.es.special_occasion', specialOccasionsEs)
+        setValue('translatable.ru.special_occasions', checkedOccasions)
+        setValue('translatable.en.special_occasions', specialOccasionsEn)
+        setValue('translatable.es.special_occasions', specialOccasionsEs)
     }
  
   return (
@@ -18,7 +18,7 @@ function SpecialOccasions({setValue, control, errors}) {
         <h3>Выберите особые события</h3>
         <Controller    
         control={control}
-        name='translatable.ru.special_occasion'  
+        name='translatable.ru.special_occasions'  
         render={({field})=> (
             <div  > 
               {specialOccasions.map(occasion=> (
@@ -45,7 +45,7 @@ function SpecialOccasions({setValue, control, errors}) {
         
         
         />
-       {errors.translatable?.ru?.special_occasion?.message && <p className='text-red-500'>{errors.translatable?.ru?.special_occasion?.message}</p>}
+       {errors.translatable?.ru?.special_occasions?.message && <p className='text-red-500'>{errors.translatable?.ru?.special_occasions?.message}</p>}
     </div>
   )
 }

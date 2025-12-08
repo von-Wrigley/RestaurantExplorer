@@ -16,6 +16,9 @@ import { RestaurantFormData, restaurantSchema } from '@/static/res';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { slugify } from '@/actions/description/slugify';
 import BusinessHours from '../descriptionParts/BusinessHours';
+import UploadImaagestoStorage from '../descriptionParts/UploadImaagestoStorage';
+import { createClient } from '../../../../../supabase/supabase-client';
+import { getRes } from '@/actions/getInfo/getRes';
 
 function DescriptionForm({restuarant}) {
     const {
@@ -33,9 +36,10 @@ function DescriptionForm({restuarant}) {
         email: restuarant.email ?? 'example.com',
         phone_number: restuarant.phone_number ?? '+7 (000) 000-00-00',
         price_range: restuarant.price_range,
-        average_rating: restuarant.average_rating ?? 0,
         capacity: restuarant.capacity ?? 0,
         business_hours: restuarant.business_hours,
+        images_url: restuarant.images_url ?? [],
+        slug_name: restuarant.slug_name ?? '',
         parking: false,
         wifi: false,
         kids_room: false,
@@ -49,7 +53,7 @@ function DescriptionForm({restuarant}) {
                 services:[],
                 description: 'Описание на английском',
                 type_cuisine: '',
-                special_occasion: [],
+                special_occasions: [],
                 dietary_restrictions:[]
             },
                      ru: {
@@ -60,7 +64,7 @@ function DescriptionForm({restuarant}) {
                 services:[],
                 description: 'Описание на русском',
                 type_cuisine: '',
-                special_occasion: [],
+                special_occasions: [],
                 dietary_restrictions:[]
             },
                      es: {
@@ -71,23 +75,92 @@ function DescriptionForm({restuarant}) {
                 services:[],
                 description: 'Описание на испанском',
                 type_cuisine: '',
-                special_occasion: [],
+                special_occasions: [],
                 dietary_restrictions:[]
             }
         }
     },
   });
+
+
+ 
+  
    const onSubmit = async(data:RestaurantFormData) => {
      const slugName = slugify(data.translatable.en.name)
-
+    console.log('imagesurlform     ', getValues('images_url'))
  
     const datatoDatabase = {
       ...data,
       slug_name:slugName
     }
       console.log('dasd, ',datatoDatabase)
-    
-  };
+
+      const user = await getRes()
+      console.log(user)
+      
+
+ const updatedData = {
+        email: data.email,
+        phone_number: data.phone_number ,
+        price_range: data.price_range,
+        capacity: data.capacity,
+        business_hours: data.business_hours,
+        images_url: data.images_url ?? [],
+        parking: data.parking,
+        wifi: data.wifi,
+        is_completed: true,
+        res_name: data.translatable.en.name,
+        slug_name: slugName,
+        kids_room: data.kids_room,
+        translatable: {
+            en: {
+               city: data.translatable.en.city ,
+                name: data.translatable.en.name ,
+                address: data.translatable.en.address ,
+                cuisines: data.translatable.en.cuisines ,
+                services: data.translatable.en.services ,
+                description: data.translatable.en.description ,
+                type_cuisine: data.translatable.en.type_cuisine ,
+                special_occasions: data.translatable.en.special_occasions ,
+                dietary_restrictions: data.translatable.en.dietary_restrictions 
+            },
+                     ru: {
+                city: data.translatable.ru.city ,
+                name: data.translatable.ru.name ,
+                address: data.translatable.ru.address ,
+                cuisines: data.translatable.ru.cuisines ,
+                services: data.translatable.ru.services ,
+                description: data.translatable.ru.description ,
+                type_cuisine: data.translatable.ru.type_cuisine ,
+                special_occasions: data.translatable.ru.special_occasions ,
+                dietary_restrictions: data.translatable.ru.dietary_restrictions 
+            },
+                     es: {
+                city: data.translatable.es.city ,
+                name: data.translatable.es.name ,
+                address: data.translatable.es.address ,
+                cuisines: data.translatable.es.cuisines ,
+                services: data.translatable.es.services ,
+                description: data.translatable.es.description ,
+                type_cuisine: data.translatable.es.type_cuisine ,
+                special_occasions: data.translatable.es.special_occasions ,
+                dietary_restrictions: data.translatable.es.dietary_restrictions 
+            }
+        }
+    }
+    console.log(restuarant.owner_id, 'click')
+      
+    const supabase  = createClient()
+      const { error:erTable } = await supabase
+   .from('restaurants')
+  .update(updatedData)
+   .eq('owner_id', restuarant.owner_id)
+
+   if(erTable){
+    console.log("erTable ", erTable)
+   }
+  
+  }
    const onError = (errors, e) => console.log(errors, e)
 
   return (
@@ -122,6 +195,8 @@ function DescriptionForm({restuarant}) {
            <RestaurantDescription register={register} errors={errors}/>  
              {/* Часы работы */}
              <BusinessHours register={register} />
+             {/* Загрузка изображений */}
+             <UploadImaagestoStorage  register={register} id={restuarant.owner_id}  setValue={setValue}  />
       
 </div>
         </div>

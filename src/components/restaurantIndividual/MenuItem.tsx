@@ -26,8 +26,8 @@ async function MenuItem({resId}) {
     <div>
            
     
-                     {menu?.map(men => (
-                <div key={men.restaurant_id} className="p-4.5 flex flex-col gap-6">
+                     {menu?.map((men, index) => (
+                <div key={index} className="p-4.5 flex flex-col gap-6">
                  <div>
     {men.menu_items.filter(m=> m.category === predefinedCategories[0].key).length >0 && (
       <>

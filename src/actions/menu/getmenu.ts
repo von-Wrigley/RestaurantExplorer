@@ -13,7 +13,7 @@ export async function getMenuItemFromTable(){
     console.log('Error in getting users menu. ', error )
  }
 
- const {data: restaurant, error: errorMenu} = await supabase.from('menus').select('*').eq('owner', user.user?.id).single()
+ const {data: restaurant, error: errorMenu} = await supabase.from('menus').select('*').eq('user_id', user.user?.id).single()
 console.log(restaurant)
  if(errorMenu){
      console.log('Error in getting users menu in restaurants table. ', errorMenu.cause, errorMenu.message )

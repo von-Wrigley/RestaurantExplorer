@@ -240,7 +240,7 @@ export const CuisinetypeRu = [
                 type_cuisine: z.string().min(1, {
     message: 'Выберите хотя бы один вариант'
   }),
-                special_occasion: z.array(z.string()).min(1, {
+                special_occasions: z.array(z.string()).min(1, {
     message: 'Выберите хотя бы один вариант'
   }),
                 dietary_restrictions:z.array(z.string())
@@ -285,8 +285,10 @@ export const CuisinetypeRu = [
         price_range: z.number().min(0, 'Не может быть 0'),
         capacity: z.number().min(1, 'Не может быть 0'),
          business_hours: buinessHours.nullable(),
+        images_url: z.array(z.string()),
         parking:  z.boolean(),
         wifi:  z.boolean(),
+        slug_name: z.string(),
         kids_room: z.boolean(),
         translatable: z.object({
           en:translat,

@@ -13,9 +13,7 @@ export default function AuthCallback() {
   useEffect(() => {
     const handleCallback = async () => {
       const supabase = createClient()
-      
-      console.log('📍 Full URL:', window.location.href)
-      console.log('📍 URL hash:', window.location.hash)
+
 
       // Получаем параметры из HASH
       const hash = window.location.hash.substring(1)

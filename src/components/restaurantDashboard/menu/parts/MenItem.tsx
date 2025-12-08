@@ -5,6 +5,7 @@ import MenuItemChange from './MenuItemChange'
 
 import { useForm, useFieldArray  } from 'react-hook-form';
 import { menuSchema, menuSchemaFormData } from '@/static/res';
+import { updateMenu } from '@/actions/setInfo/updateMenu';
 
 
 
@@ -49,7 +50,14 @@ function MenItem({res}) {
   keyName: 'rhfId'
  })
 const formItems = getValues('items')
-const onSubmit = (data, e) => console.log(data, e);
+const onSubmit = (data, e) => {
+console.log('res owner',res)
+  // console.log(data.items);
+  updateMenu(data.items, res.user_id
+)
+
+
+}
 const onError = (errors, e) => console.log(errors, e);
     
     

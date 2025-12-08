@@ -25,13 +25,21 @@ function ResInd({res}:any) {
     <MenuItem resId={restuarant.id} />
       </section>
 
-         <section className=' border-amber-300 border-2
+
+<div className='flex flex-col'>
+   <section className=' border-amber-300 border-2
        hover:shadow-2xl
         transition-all duration-150 ease-in-out
       rounded-2xl  bg-white w-fit '>
       
         <TimeTable timeT={restuarant.business_hours} />
       </section>
+      <button type='button' className='bg-violet-600 w-fit p-3 rounded-sm self-center-safe mt-2'>
+           Зарезервировать
+      </button>
+
+</div>
+        
 
 
        <section className='flex flex-col gap-4 p-4 border-amber-300 border-2
