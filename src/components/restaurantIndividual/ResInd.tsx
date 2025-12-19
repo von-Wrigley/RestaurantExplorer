@@ -2,11 +2,13 @@
 import CarouselImage from './CarouselImage';
 import TimeTable from './TimeTable';
 import MenuItem from './MenuItem';
+import BtnReserv from '../reserv/BtnReserv';
 
 
 function ResInd({res}:any) {
+  
   return (
-      <div className=' my-3 rounded-t-2xl w-full  '>
+      <div className=' my-3 rounded-t-2xl w-full   '>
        {res?.map( restuarant=> (
          <div key={restuarant.id}>
         <CarouselImage imageres={restuarant.images_url} />
@@ -15,7 +17,7 @@ function ResInd({res}:any) {
         <p className='text-center  pt-2 text-lg w-2/5 mx-auto'>{restuarant.translatable['ru'].description}</p>
         </section>
         
-        <div className='flex flex-row gap-8 mt-8 items-start'>
+        <div className='md:flex md:flex-row md:gap-8 md:mt-8 md:items-start flex flex-col'>
 
    
      <section className='border-amber-300 border-2
@@ -34,18 +36,19 @@ function ResInd({res}:any) {
       
         <TimeTable timeT={restuarant.business_hours} />
       </section>
-      <button type='button' className='bg-violet-600 w-fit p-3 rounded-sm self-center-safe mt-2'>
-           Зарезервировать
-      </button>
+      <section>
+        <BtnReserv id={restuarant.owner_id} />
+      </section>
+      
 
 </div>
         
 
 
-       <section className='flex flex-col gap-4 p-4 border-amber-300 border-2
+       <section className='flex flex-col gap-4 p-4 border-amber-300 border-2 bg-gray-100 
        hover:shadow-2xl
         transition-all duration-150 ease-in-out
-      rounded-2xl  bg-white  flex-1 '>
+      rounded-2xl   flex-1 '>
         <h4 className='text-center text-2xl'>Дополнительная информация</h4>
                <span className='font-bold text-lg'>Услуги</span>
                <div className='flex flex-row gap-2.5 flex-wrap'>

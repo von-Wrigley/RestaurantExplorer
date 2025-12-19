@@ -35,6 +35,7 @@ export async function SendInfo(id: any, email: any, name:string) {
     .insert({
         res_name:name,
         email,
+        role: 'restaurant_owner', 
         owner_id: dataInv.user.id,
     }) 
 if (restaurantError) {

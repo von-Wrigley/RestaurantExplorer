@@ -23,7 +23,7 @@ function TimeTable({timeT}:any) {
     const tiemArray = Object.entries(timeT).sort(([dayA], [dayB])=> daysOfTheWeek[dayA]-daysOfTheWeek[dayB])
 
   return (
-    <div className="p-3.5">
+    <div className="p-3.5 bg-gray-100 rounded-xl">
           <h4 className="text-center text-2xl">Время работы</h4>
        {tiemArray.map(([day, time], index) => (
         <div key={index} className=" grid grid-cols-2 gap-16 p-3 hover:border-b-2  hover:border-amber-300   ">
