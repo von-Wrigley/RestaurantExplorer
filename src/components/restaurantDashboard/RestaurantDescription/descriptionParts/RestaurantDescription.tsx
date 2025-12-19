@@ -6,13 +6,13 @@ function RestaurantDescription({register, errors}) {
       <h4>Описание ресторана</h4>
        <label>Описание на русском:</label>
       <textarea  {...register('translatable.ru.description')} placeholder='Описание на русском' 
-      className='focus:border-blue-500 focus:ring focus:ring-blue-600   focus:outline-none border p-1 rounded-sm bg-white caret-blue-500' />
+      className='focus:border-blue-500 focus:ring focus:ring-blue-600 duration-300   focus:outline-none border p-1 rounded-sm bg-white caret-blue-500' />
        <label>Описание на английском:</label>
        <textarea {...register('translatable.en.description')} placeholder='Описание на английском' 
-       className=' focus:border-blue-500 focus:ring focus:ring-blue-600   focus:outline-none border p-1 rounded-sm bg-white caret-blue-500' />
+       className=' focus:border-blue-500 focus:ring focus:ring-blue-600 duration-300    focus:outline-none border p-1 rounded-sm bg-white caret-blue-500' />
         <label>Описание на испанском:</label>
         <textarea {...register('translatable.es.description')} placeholder='Описание на испанском' 
-        className='focus:border-blue-500 focus:ring focus:ring-blue-600   focus:outline-none  
+        className='focus:border-blue-500 focus:ring focus:ring-blue-600 duration-300    focus:outline-none  
       border p-1 rounded-sm bg-white ' />
  {errors.translatable?.ru?.description?.message && <p className='text-red-500'>{errors.translatable?.ru?.description?.message}</p>}
    
