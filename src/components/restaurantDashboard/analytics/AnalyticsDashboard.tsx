@@ -1,5 +1,5 @@
 'use client'
-import { Line, LineChart, XAxis, YAxis } from 'recharts';
+import { Line, LineChart } from 'recharts';
 
 
    const data = [
@@ -33,21 +33,23 @@ import { Line, LineChart, XAxis, YAxis } from 'recharts';
   },
 ];
 
-function AnalyticsDashboard() {
-
-
+function AnalyticsDashboard({bookings, restaurant}) {
+  const numofResToday = bookings.length - Number(restaurant)
+    const aveargeTable = (bookings.length  /  Number(restaurant[0].tables)) *100
+   console.log(aveargeTable)
   return (
     <div className='h-full w-full'>
        <LineChart
       width={120}
       height={70}
       responsive
-      className='border p-1 rounded-md'
+      className='border p-1 rounded-md bg-white'
       data={data}
     >
       <Line type="monotone" dataKey="users" stroke="#8884d8" strokeWidth={2} />
  
     </LineChart>
+    <p>{aveargeTable} %</p>
     </div>
   )
 }

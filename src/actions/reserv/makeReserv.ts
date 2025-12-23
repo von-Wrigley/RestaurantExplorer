@@ -14,6 +14,7 @@ export  const makeReserv = async(previousState:any, formData:any)=> {
       if(error){
         console.log('error in getting user', error)
       }
+
    
   
    const res_id = formData.get('res_id')
@@ -25,29 +26,42 @@ export  const makeReserv = async(previousState:any, formData:any)=> {
    const tmFormat = tm.split('-').map((x:string) => x.trim())
    const booking_date = dt.split('.').reverse().join('-')
      
-   
+ 
      const x = table_id.split(',')
      const randomTable  = Math.floor(Math.random()* x.length)
-     console.log(x[randomTable])
+     console.log('table' ,  x[randomTable])
   
     const sum =    getRev(tm, booking_date)
     const sumBooking = sum.toString()
 
- const { error: errorBooking} = await supabase.from('booking').insert({
-  user_id: user?.id,
-  table_id: x[randomTable],
-  res_id,
-  booking_date,
-  start_time:  tmFormat[0],
-  end_time:  tmFormat[1], 
-  status: 'confirmed',
-  special_request,
-  sum:sumBooking
+//  const { error: errorBooking} = await supabase.from('booking').insert({
+//   user_id: user?.id,
+//   table_id: x[randomTable],
+//   res_id,
+//   booking_date,
+//   start_time:  tmFormat[0],
+//   end_time:  tmFormat[1], 
+//   status: 'confirmed',
+//   special_request,
+//   sum:sumBooking
+
+//  })
+console.log(user?.id, x[randomTable], res_id)
+const selected_user =  user?.id
+  const {data, error: errorBooking} = await supabase.rpc('atomic_make_reserv',{
+  p_user_id: selected_user,
+  p_table_id: x[randomTable],
+  p_res_id: res_id,
+  p_booking_date: booking_date,
+  p_start_time:  tmFormat[0],
+  p_end_time:  tmFormat[1], 
+  p_special_request: special_request,
+  p_sum:sumBooking
 
  })
  if(errorBooking){
   console.log('problem in inserting booking', errorBooking)
  }
-
+console.log(data)
 
 }

@@ -15,7 +15,7 @@ import TimeReservSkeleton from '../skeleton/TimeReservSkeleton';
 
 function Modal({ id, handleClick}) {
 
-  const [state, formAction] = useActionState(makeReserv, null);
+  const [state, formAction, isPending] = useActionState(makeReserv, null);
   const [getTime, setGetTime] = useState({
     tm: '',
     dt: ''
@@ -128,7 +128,8 @@ function Modal({ id, handleClick}) {
   />
         <textarea id="special_request" name="special_request" defaultValue='Особые пожелания. Например, предоставить вазу если вы придете с цветами'  
        className=" focus:ring focus:ring-violet-500   focus:outline-none    border border-amber-300 focus:border-violet-500 p-2 rounded-sm"></textarea>
-      <button type="submit" className="bg-violet-500 hover:cursor-pointer p-1 px-1.5 rounded-sm self-center-safe w-fit">Зарезервировать</button>
+      <button type="submit" className="bg-violet-500 hover:cursor-pointer p-1 px-1.5 rounded-sm self-center-safe w-fit">  {isPending ? "Бронируем... ": 'Зарезервировать'}</button>
+    
      </form>
           
         </div>

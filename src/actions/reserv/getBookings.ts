@@ -1,6 +1,6 @@
 
 import { createClient } from "../../../supabase/supabase-client";
-import { getDatesReserv } from "./getDatesReserv";
+ 
 
 export async function getBookings(id, day) {
  
