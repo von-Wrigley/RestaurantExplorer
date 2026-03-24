@@ -1,16 +1,11 @@
-import Av from "./Av"
+import Av from './Av';
 
-
-async function BtnReserv({id}:{id:string}) {
- 
+async function BtnReserv({ id }: { id: string }) {
   return (
-    <div>
-      <Av  id={id} />
+    <div className="self-center ">
+      <Av id={id} />
     </div>
- 
-      
-    
-  )
+  );
 }
 
-export default BtnReserv
+export default BtnReserv;

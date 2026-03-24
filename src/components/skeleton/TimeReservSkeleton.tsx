@@ -1,11 +1,5 @@
-
-
 function TimeReservSkeleton() {
-  return (
-
-      'Loading....'
-    
-  )
+  return 'Loading....';
 }
 
-export default TimeReservSkeleton
+export default TimeReservSkeleton;

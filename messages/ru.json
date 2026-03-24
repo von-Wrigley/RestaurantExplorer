@@ -1,0 +1,9 @@
+{
+  "HomePage": {
+    "headerSign": "Войти",
+       "BtnSignout": "Выйти"
+  },
+    "Restaurants" : {
+    "restaurantH1" : "У нас представлены наиболее популярные ресторана города."
+  }
+}

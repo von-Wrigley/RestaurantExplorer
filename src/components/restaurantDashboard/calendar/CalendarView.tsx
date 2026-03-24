@@ -1,19 +1,14 @@
-import { getBookingCalendar } from "@/actions/calendar/getBookingCalendar"
-import CalendarTable from "./CalendarTable"
-
- 
-
+import { getBookingCalendar } from '@/actions/calendar/getBookingCalendar';
+import CalendarTable from './CalendarTable';
 
 async function CalendarView() {
+  const bookings = await getBookingCalendar();
 
-    const bookings= await getBookingCalendar() 
-    
   return (
     <>
-    
-      <CalendarTable bookings={bookings}  />
+      <CalendarTable bookings={bookings} />
     </>
-  )
+  );
 }
 
-export default CalendarView
+export default CalendarView;

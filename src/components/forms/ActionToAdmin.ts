@@ -1,37 +1,37 @@
+'use server';
 
-'use server'
+import { createClient } from '../../../supabase/server';
+import { adminCheckResSchema } from '../../static/res';
 
-import { createClient } from "../../../supabase/server"
+async function ActionToAdmin(previousState: unknown, formData: FormData) {
+  const supabase = await createClient();
+  const rawData = {
+    name: formData.get('name'),
+    email: formData.get('email'),
+  };
+  const dataValidation = await adminCheckResSchema.safeParseAsync(rawData);
 
- 
+  if (!dataValidation.success) {
+    return {
+      success: false,
+      message: 'Неккоректные данные',
+    };
+  } else {
+    const { error } = await supabase.from('res_applications').insert([
+      {
+        res_email: dataValidation.data.email,
+        status: 'pending',
+        name: dataValidation.data.name,
+      },
+    ]);
 
-async function  ActionToAdmin(previousState:any, formData:any) {
-
- 
- const email = formData.get('email')
-const name = formData.get('name')
-
-
-const supabase = await createClient()
-
-const {status, error} = await supabase.from('res_applications').insert([{
-   res_email: email,
-   status: 'pending',
-   name
-}
-
-])
-
- 
-    
-     if(error?.code === '23505'){
-      return{
-         success:false,
-         message: 'Email already exists'
-      }
-      console.log('Full error details:', error) 
-
- }
+    if (error?.code === '23505') {
+      return {
+        success: false,
+        message: 'Email already exists',
+      };
+    }
+  }
 }
 
 export default ActionToAdmin;

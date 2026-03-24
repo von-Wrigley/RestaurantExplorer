@@ -1,64 +1,26 @@
-'use client'
-import Image from 'next/image';
+import { Fragment } from 'react';
+import { fetchedDataRestaurant } from './restaurantType';
 import Pagination from '../Pagination';
-import Link from 'next/link';
+import { getAllRestairants } from '@/actions/restaurant/getAllRestaurants';
+import RestaurantMainPage from './RestaurantMainPage';
+import { getLocale } from 'next-intl/server';
 
-
-
-
-
-
-function RestaurantsPage({res, currentPage, totalPages}: any) {
-
-
+async function RestaurantsPage({ searchParams }: { searchParams: { searchParams: { category?: string | undefined; cuisines: string; page: number; }; }}) {
+  const searchParamsPage = await searchParams.searchParams;
+  const { res, totalPages } = await getAllRestairants(searchParams);
+  const currentPage = Number(searchParamsPage.page) || 1;
+  const locale = await getLocale();
   return (
-    <div>
-      <h3 className='p-6 mt-2.5 text-center  m-auto text-4xl'>У нас представлены наиболее популярные ресторана города</h3>
-      <div className=' p-10 flex flex-col md:grid md:grid-cols-2 md:gap-8 
-
-'>
-        
-    
-      {res.map((restaurant:any)=> (
-        <Link href={`/restaurants/${restaurant.slug_name}`} key={restaurant.id} className=' bg-amber-300 rounded-lg  flex flex-col'>
-        
-     
-          {restaurant.images_url && restaurant.images_url.length > 0 ? (
-            
-   <div className="relative  rounded-lg">
- 
-  <Image 
-    src={restaurant.images_url[0]} 
-    alt={restaurant.translatable['ru'].name} 
-    width={500} 
-    height={500}
-    className="aspect-25/26 overflow-hidden w-full"
-  />
-  
-   
-  <div className="absolute bottom-0 left-0 right-0 h-1/13 
-    backdrop-blur-md 
-    bg-black/40
-    bg-linear-to-t from-black/80 via-black/40 to-transparent
-  ">
-    <div className="absolute bottom-4 left-4 text-white">
-      <h3 className="text-xl text-center font-bold">{restaurant.translatable['ru'].name}</h3>
-    </div>
-  </div>
-</div>
-    ) : (
-      <div>No image</div>  
-    )}   <div className='flex flex-row justify-between px-2.5 py-3'>
-            <p>Рейтинг ресторана {restaurant.average_rating}</p>
-               <p>{restaurant.translatable['ru'].type_cuisine} кухня</p>
-       
-          </div>
-        </Link>
-         
-      )  )}  </div>
-            <Pagination currentPage={currentPage} totalPages={totalPages} />
-    </div>
-  )
+    <>
+      <div className="p-10 flex flex-col gap-y-4 md:grid md:grid-cols-2 md:gap-8 ">
+        {res.map((restaurant: fetchedDataRestaurant, index: number) => (
+          <Fragment key={index}>
+            <RestaurantMainPage restaurant={restaurant} locale={locale} index={index} />
+          </Fragment>
+        ))}
+      </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
+    </>
+  );
 }
-
-export default RestaurantsPage
+export default RestaurantsPage;

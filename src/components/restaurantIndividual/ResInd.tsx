@@ -1,127 +1,72 @@
- 
 import CarouselImage from './CarouselImage';
 import TimeTable from './TimeTable';
-import MenuItem from './MenuItem';
 import BtnReserv from '../reserv/BtnReserv';
+import RestaurantDescription from './RestaurantDescription';
+import { getRestaurantIndivid } from '@/actions/restaurant/getRestaurantIndivid';
+import { routing } from '@/i18n/routing';
+import { setRequestLocale } from 'next-intl/server';
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 
-
-function ResInd({res}:any) {
-  
-  return (
-      <div className=' my-3 rounded-t-2xl w-full   '>
-       {res?.map( restuarant=> (
-         <div key={restuarant.id}>
-        <CarouselImage imageres={restuarant.images_url} />
-        <section className=''>
-        <h2 className='text-center pt-3.5 text-5xl'>{restuarant.translatable['ru'].name}</h2>
-        <p className='text-center  pt-2 text-lg w-2/5 mx-auto'>{restuarant.translatable['ru'].description}</p>
-        </section>
-        
-        <div className='md:flex md:flex-row md:gap-8 md:mt-8 md:items-start flex flex-col'>
-
-   
-     <section className='border-amber-300 border-2
-       hover:shadow-2xl
-        transition-all duration-150 ease-in-out
-      rounded-2xl  bg-white  flex-2'>
-    <MenuItem resId={restuarant.id} />
-      </section>
-
-
-<div className='flex flex-col'>
-   <section className=' border-amber-300 border-2
-       hover:shadow-2xl
-        transition-all duration-150 ease-in-out
-      rounded-2xl  bg-white w-fit '>
-      
-        <TimeTable timeT={restuarant.business_hours} />
-      </section>
-      <section>
-        <BtnReserv id={restuarant.owner_id} />
-      </section>
-      
-
-</div>
-        
-
-
-       <section className='flex flex-col gap-4 p-4 border-amber-300 border-2 bg-gray-100 
-       hover:shadow-2xl
-        transition-all duration-150 ease-in-out
-      rounded-2xl   flex-1 '>
-        <h4 className='text-center text-2xl'>Дополнительная информация</h4>
-               <span className='font-bold text-lg'>Услуги</span>
-               <div className='flex flex-row gap-2.5 flex-wrap'>
-       {restuarant.translatable['ru'].services.map((x, index)=> (
-                <p className='bg-amber-300 shadow-lg shadow-amber-300/50 hover:shadow-amber-300/80 px-2 w-fit p-1 rounded-md' key={index}>
-                    {x}
-                </p>
-                
-            ) )} 
-            
-               </div>
-           
-            <div>
-                
-            </div>
-            <span className='font-bold text-lg'>Бронирование на особые случаи</span>
-               <div className='flex flex-row gap-2.5 flex-wrap'>
-            {restuarant.translatable['ru'].special_occasions.map((x, index)=> (
-                <p className='bg-amber-300 shadow-lg shadow-amber-300/50 px-2 w-fit p-1 rounded-md' key={index}>
-                    {x}
-                    
-                </p>
-                
-            ) )} 
-            
-               </div>
-
-            <div>
-                  <span className='font-bold text-lg'>Вместимость ресторана:</span> <span> {restuarant.capacity} персон</span>
-            </div>
-              
-              
-                    {(restuarant.parking || restuarant.wifi || restuarant.kids_room) &&    <span className='font-bold text-lg'>Остальное</span>   }
-                   <div  className='flex flex-row gap-2.5 flex-wrap'>
-                    {restuarant.parking && <span className='bg-amber-300 shadow-lg shadow-amber-300/50 px-2 w-fit p-1 rounded-md'>Паркинг</span>}
-                    {restuarant.wifi && <span className='bg-amber-300 shadow-lg shadow-amber-300/50 px-2 w-fit p-1 rounded-md'>WIFI</span>}
-                    {restuarant.kids_room && <span className='bg-amber-300 shadow-lg shadow-amber-300/50 px-2 w-fit p-1 rounded-md'>Детская игроваяя комната</span>}
-                  
-                   </div>
-                 <div>
-                   <h4 className='font-bold text-lg'>Контакты</h4>
-        <p className=' pt-2 w-fit'><span className='font-semibold'>Почта: </span>  {restuarant.email}</p>
-         <p className=' pt-2 w-fit '><span className='font-semibold'>Номер телефона: </span> {restuarant.phone_number}</p>
-                 </div>
-      
-            
-      
-
-
-      </section>
-
-        </div>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-       
-
-
-
-         </div>
-       ))}
-
-
-
-    
-    </div>
-  )
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
 }
 
-export default ResInd
+async function ResInd({ params }: {params: {locale:string; slug:string}}) {
+  const { locale, slug } = await params;
+
+  const restuarant = await getRestaurantIndivid(slug);
+  setRequestLocale(locale);
+
+  const AdditionalInfoRes = dynamic(() => import('./AdditionalInfoRes'), {});
+  const MenuItem = dynamic(() => import('./MenuItem'), {});
+
+  if (!restuarant) {
+    return <div className="text-center py-10">Ресторан не найден</div>;
+  }
+  return (
+    <div className=" my-3 rounded-t-2xl w-full  md:mx-24 dark:bg-black  bg-gray-200 py-5 ">
+      <div>
+        <div className="flex flex-col lg:flex-row gap-y-4 w-full h-auto  text-white ">
+          <Suspense>
+            <RestaurantDescription restuarantName={restuarant} locale={locale} />
+          </Suspense>
+
+          <CarouselImage imageres={restuarant.images_url} />
+        </div>
+
+        <div className="md:flex md:flex-col md:gap-8 md:mt-8 md:items-start flex flex-col">
+          <section
+            className="border-amber-300 dark:border-darkmode-10 border-2 w-full  my-5
+       hover:shadow-2xl
+        transition-all duration-150 ease-in-out
+      rounded-2xl  bg-white  flex-2  "
+          >
+            <Suspense fallback={<p>Loading...</p>}>
+              <MenuItem locale={locale} />
+            </Suspense>
+          </section>
+
+          <div className="flex md:flex-row flex-col gap-14 w-full ">
+            <div
+              className=" border-amber-300 dark:border-darkmode-10 border-2
+       hover:shadow-2xl
+        transition-all duration-150 ease-in-out
+      rounded-2xl  bg-gray-100 dark:bg-black w-fit "
+            >
+              <TimeTable timeT={restuarant.business_hours} />
+            </div>
+
+            <Suspense fallback={<p>Loading...</p>}>
+              <AdditionalInfoRes slug={slug} locale={locale} />
+            </Suspense>
+          </div>
+
+          <BtnReserv id={restuarant.owner_id || '1'} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ResInd;

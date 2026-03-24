@@ -1,18 +1,10 @@
-
-import { getMenuItemFromTable } from '@/actions/menu/getMenuItemFromTable'
-import DescriptionForm from './form/DescriptionForm'
- 
-
-
+import { getMenuItemFromTable } from '@/actions/menu/getMenuItemFromTable';
+import DescriptionForm from './form/DescriptionForm';
+import { fetchedDataRestaurant } from '../../restaurants/restaurantType';
 async function GetDescrptionInfo() {
-    const restuarant = await getMenuItemFromTable()
-    
+  const restuarant: fetchedDataRestaurant = await getMenuItemFromTable();
 
-  return (
-    
-      <DescriptionForm restuarant={restuarant} />
-    
-  )
+  return <DescriptionForm restuarant={restuarant} />;
 }
 
-export default GetDescrptionInfo
+export default GetDescrptionInfo;

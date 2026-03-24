@@ -1,11 +1,5 @@
-
-
 function RandomRestaurant() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>;
 }
 
-export default RandomRestaurant
+export default RandomRestaurant;

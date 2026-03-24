@@ -1,61 +1,45 @@
-'use client'
-import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
-import { Key, useState } from 'react';
+import { imageType } from '../restaurants/restaurantType';
+function CarouselImage({ imageres }: imageType) {
+  // const [currentIndex, setCurrentIndex] = useState<number>(0);
 
+  // const currentImageStyle = (index: number) => {
+  //   const position = (index - currentIndex + imageres.length) % imageres.length;
 
-
-function CarouselImage({imageres}:any) {
-
-const [currentIndex, setCurrentIndex] = useState<number>(0)
-
- const currentImageStyle = (index:number)=> {
-
-     const position =  (index-currentIndex + imageres.length ) % imageres.length
-
-
-      if(position === 0 ){
-        return 'z-20 opacity-100 scale-100'
-      }
-
-      else if(position === 1){
-        return 'z-10 opacity-80 scale-90 translate-x-1/4 '
-      }
-
-      else if(position ===  imageres.length-1){
-        return 'z-10 opacity-80 scale-90 -translate-x-1/4'
-      }
-      else {
-        return 'opacity-0 z-0'
-      }
-
- }
-
-
+  //   if (position === 0) {
+  //     return 'z-20 opacity-100 scale-100';
+  //   } else if (position === 1) {
+  //     return 'z-10 opacity-80 scale-90 translate-x-1/4 ';
+  //   } else if (position === imageres.length - 1) {
+  //     return 'z-10 opacity-80 scale-90 -translate-x-1/4';
+  //   } else {
+  //     return 'opacity-0 z-0';
+  //   }
+  // };
+  // const [loading, setLoading]= useState(true)
   return (
-    <div className='relative w-full max-w-6xl mx-auto h-[35vh]  overflow-hidden '>
+    <div className="relative w-fit basis-4/5   mx-auto   overflow-hidden   ">
+      {imageres?.map((image: string, index: number) => (
+        <div
+          key={index}
 
-  {imageres.map((image: string, index: number)=> (
-            <div key={index}  
-                   className={`absolute top-0 left-1/4 w-1/2 h-full 
-                   ${currentImageStyle(index)}   
-                   transition-all duration-500 ease-in-out `} > 
-            <Image 
-          width={300} 
-          height={300} 
-          src={image} 
-          alt={'Image'}
-          loading='eager'
-          className='w-full h-full rounded-2xl '
-     />
+          //  className={`absolute top-0 left-1/4 w-1/2 h-full
+          //  ${currentImageStyle(index)}
+          //  transition-all duration-500 ease-in-out flex flex-row`}
+        >
+          <Image
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            width={500}
+            height={400}
+            src={image}
+            alt={'Image'}
+            loading="lazy"
+            className="mx-auto my-auto object-contain rounded-2xl animate-imageres"
+          />
+        </div>
+      ))}
 
-
-            </div>
-           
-
-        ))}
-
-        <button className='absolute left-20 bg-slate-800 text-white transform -translate-y-1/2 rounded-2xl hover:bg-black top-1/2 p-3'
+      {/* <button className='absolute left-20 bg-slate-800 text-white transform -translate-y-1/2 rounded-2xl hover:bg-black top-1/2 p-3'
                       onClick={()=> setCurrentIndex((prev)=>(prev - 1 + imageres.length)  % imageres.length )    }>
            ‹
         </button>
@@ -64,9 +48,9 @@ const [currentIndex, setCurrentIndex] = useState<number>(0)
             onClick={()=> setCurrentIndex((prev)=>(prev + 1)  % imageres.length )    }>
          
             ›
-        </button>
-        </div>
-  )
+        </button> */}
+    </div>
+  );
 }
 
-export default CarouselImage
+export default CarouselImage;

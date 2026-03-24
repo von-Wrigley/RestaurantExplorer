@@ -1,0 +1,20 @@
+'use server';
+
+import { redirect } from 'next/navigation';
+import { createClient } from '../../../supabase/loginandlogoutClient';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const userinaccount = async (prev: any, formData: FormData) => {
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+  if (error) {
+    console.log('Error in signin user. ', error.message);
+  }
+  redirect('/ru/profile');
+};

@@ -13,19 +13,19 @@ export async function createClient() {
           return cookieStore.getAll()
         },
         setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, {
-                 ...options,
-                  httpOnly: true,
-                  secure: true,
-                  sameSite: 'lax',
-              }
-              )
-            )
-          } catch(error) {
-    console.error('error in cookies. ', error)
-          }
+    //       try {
+    //         cookiesToSet.forEach(({ name, value, options }) =>
+    //           cookieStore.set(name, value, {
+    //              ...options,
+    //               httpOnly: true,
+    //               secure: true,
+    //               sameSite: 'lax',
+    //           }
+    //           )
+    //         )
+    //       } catch(error) {
+    // console.error('error in cookies. ', error)
+    //       }
         },
       },
     }
