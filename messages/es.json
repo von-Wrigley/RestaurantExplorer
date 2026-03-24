@@ -1,0 +1,9 @@
+{
+  "HomePage": {
+    "headerSign": "Iniciar sesión",
+       "BtnSignout": "Cerrar sesión"
+  },
+    "Restaurants" : {
+    "restaurantH1" : "Te presentamos los restaurantes más populares de la ciudad."
+  }
+}
